@@ -60,6 +60,22 @@ class ReidsUsagePlugin(AutoGPTPluginTemplate):
             self.save_ts_to_redis('tokens', usage['total_tokens'])
         return response
 
+    def can_handle_on_embedding(self) -> bool:
+        """This method is called to check that the plugin can
+        handle the on_embedding method.
+
+        Returns:
+            bool: True if the plugin can handle the on_embedding method."""
+        return True
+
+    def on_embedding(self, text: str, *args, **kwargs) -> str:
+        """This method is called when a embedding is received from the model."""
+        print(Fore.YELLOW + 'Embedding text: ', Fore.CYAN + text + Style.RESET_ALL)
+        if 'raw_embedding' in kwargs:
+            raw_response = kwargs['raw_embedding']
+            usage = raw_response['usage']
+            self.save_ts_to_redis('embedding', usage['total_tokens'])
+
     def can_handle_post_prompt(self) -> bool:
         """This method is called to check that the plugin can
         handle the post_prompt method.
