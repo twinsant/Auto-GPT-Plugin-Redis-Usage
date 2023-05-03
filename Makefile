@@ -21,4 +21,10 @@ qa:
 style:
 	$(call helpers,style)
 
+zip:
+	$(call helpers,zip)
+
+mv:
+	$(call helpers,mv)
+
 .PHONY: clean qa style

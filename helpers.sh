@@ -35,8 +35,16 @@ case "$1" in
     echo Running code formatters...
     style
     ;;
+  zip)
+    echo Zipping up the project...
+    zip -r dev.zip . -x ".*/*(dist|venv|.venv|test-results)/*.*"
+    ;;
+  mv)
+    echo Move to plugins folder...
+    mv dev.zip /Users/ant/GitHub/Auto-GPT/plugins/
+    ;;
   *)
-    echo "Usage: $0 [clean|qa|style]"
+    echo "Usage: $0 [clean|qa|style|zip]"
     exit 1
     ;;
 esac
